@@ -1,0 +1,159 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API-Tasks",
+        "description": "API para persistencia de tarefas.",
+        "contact": {
+            "email": "ortoncelli@utfpr.edu.br",
+            "name": "prof. Andre Roberto Ortoncelli"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Servidor Local"
+        }
+    ],
+    "paths": {
+        "/tasks": {
+            "get": {
+                "summary": "Obter todas as tarefas",
+                "tags": [
+                    "Tasks"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de tarefas",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "description": "Comprar"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "description": "Estudar"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar uma nova tarefa",
+                "tags": [
+                    "Tasks"
+                ],
+                "requestBody": {
+                    "description": "Nova tarefa",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "description": "Descrição da nova tarefa"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tarefa criada com sucesso",
+                        "tags": [
+                            "Tasks"
+                        ],
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 4,
+                                    "description": "Descrição da nova tarefa"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "get": {
+                "summary": "Obter uma tarefa por ID",
+                "tags": [
+                    "Tasks"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tarefa encontrada",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "description": "Comprar pão"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tarefa não encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Atualizar uma tarefa por ID",
+                "requestBody": {
+                    "description": "Tarefa atualizada",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "description": "Nova descrição da tarefa"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarefa atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "description": "Nova descrição da tarefa"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tarefa não encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Excluir uma tarefa por ID",
+                "responses": {
+                    "204": {
+                        "description": "Tarefa excluída com sucesso"
+                    },
+                    "404": {
+                        "description": "Tarefa não encontrada"
+                    }
+                }
+            }
+        }
+    }
+}
