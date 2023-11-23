@@ -16,7 +16,7 @@ module.exports = {
     },
 
     async getUserByName(req, res) {
-        const name = req.body.name;
+        const name = req.params.name;
 
         try {
             const user = await db.Users.findOne({

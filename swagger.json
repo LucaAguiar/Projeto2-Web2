@@ -1,11 +1,11 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API-Tasks",
-        "description": "API para persistencia de tarefas.",
+        "title": "API-Social-Network",
+        "description": "API para rede social simplificada.",
         "contact": {
-            "email": "ortoncelli@utfpr.edu.br",
-            "name": "prof. Andre Roberto Ortoncelli"
+            "email": "lucaaguiar@alunos.utfpr.edu.br",
+            "name": "Luca Aguiar Costa Carvalho"
         },
         "version": "1.0.0"
     },
@@ -16,141 +16,487 @@
         }
     ],
     "paths": {
-        "/tasks": {
+        "/getUsers": {
             "get": {
-                "summary": "Obter todas as tarefas",
-                "tags": [
-                    "Tasks"
-                ],
+                "summary": "Obter todos os usuários",
+                "tags": ["Users"],
                 "responses": {
                     "200": {
-                        "description": "Lista de tarefas",
+                        "description": "Lista de usuários",
                         "content": {
                             "application/json": {
                                 "example": [
                                     {
                                         "id": 1,
-                                        "description": "Comprar"
-                                    },
-                                    {
-                                        "id": 2,
-                                        "description": "Estudar"
+                                        "username": "luan",
+                                        "password": "1234",
+                                        "name": "Luan",
+                                        "createdAt": "2023-11-21T20:03:18.320Z",
+                                        "updatedAt": "2023-11-21T20:03:18.320Z"
                                     }
                                 ]
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Nenhum usuário encontrado"
                     }
                 }
-            },
+            }
+        },
+        "/getUserByName/:name": {
+            "parameters": [
+                {
+                    "name": "name",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "summary": "Obter usuário por nome",
+                "tags": ["Users"],
+                "responses": {
+                    "200": {
+                        "description": "Usuário encontrado",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 2,
+                                    "username": "luca",
+                                    "password": "1234",
+                                    "name": "Luca",
+                                    "createdAt": "2023-11-21T20:03:23.694Z",
+                                    "updatedAt": "2023-11-21T20:03:23.694Z"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    }
+                }
+            }
+        },
+        "/createUser": {
             "post": {
-                "summary": "Criar uma nova tarefa",
-                "tags": [
-                    "Tasks"
-                ],
+                "summary": "Criar um novo usuário",
+                "tags": ["Users"],
                 "requestBody": {
-                    "description": "Nova tarefa",
+                    "description": "Novo usuário",
                     "content": {
                         "application/json": {
                             "example": {
-                                "description": "Descrição da nova tarefa"
+                                "id": null,
+                                "username": "luca",
+                                "password": "1234",
+                                "name": "Luca"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Tarefa criada com sucesso",
-                        "tags": [
-                            "Tasks"
-                        ],
+                        "description": "Usuário criado com sucesso",
+                        "tags": ["Users"],
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "id": 4,
-                                    "description": "Descrição da nova tarefa"
+                                    "id": null,
+                                    "username": "luca",
+                                    "password": "1234",
+                                    "name": "Luca"
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Solicitação inválida: Informações incorretas"
                     }
                 }
             }
         },
-        "/tasks/{id}": {
+        "/updateUser/:id": {
             "parameters": [
                 {
                     "name": "id",
                     "in": "path",
                     "required": true,
                     "schema": {
-                        "type": "integer"
+                        "type": "int"
                     }
                 }
             ],
-            "get": {
-                "summary": "Obter uma tarefa por ID",
-                "tags": [
-                    "Tasks"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tarefa encontrada",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "id": 1,
-                                    "description": "Comprar pão"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Tarefa não encontrada"
-                    }
-                }
-            },
             "put": {
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "Atualizar uma tarefa por ID",
+                "tags": ["Users"],
+                "summary": "Atualizar um usuário por ID",
                 "requestBody": {
-                    "description": "Tarefa atualizada",
+                    "description": "Usuário atualizado",
                     "content": {
                         "application/json": {
                             "example": {
-                                "description": "Nova descrição da tarefa"
+                                "name": "Nome editado"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Tarefa atualizada com sucesso",
+                        "description": "Usuário atualizado com sucesso",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "id": 1,
-                                    "description": "Nova descrição da tarefa"
+                                    "id": 2,
+                                    "username": "luca",
+                                    "password": "1234",
+                                    "name": "Nome editado",
+                                    "createdAt": "2023-11-21T20:03:23.694Z",
+                                    "updatedAt": "2023-11-23T14:15:10.934Z"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Tarefa não encontrada"
+                        "description": "Usuário não encontrado"
                     }
                 }
-            },
+            }
+        },
+        "/deleteUser/:id": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "int"
+                    }
+                }
+            ],
             "delete": {
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "Excluir uma tarefa por ID",
+                "tags": ["Users"],
+                "summary": "Excluir um usuário por ID",
                 "responses": {
                     "204": {
-                        "description": "Tarefa excluída com sucesso"
+                        "description": "Usuário excluído com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Tarefa não encontrada"
+                        "description": "Usuário não encontrado"
+                    }
+                }
+            }
+        },
+        "/getPosts": {
+            "get": {
+                "summary": "Obter todas as postagens",
+                "tags": ["Posts"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de postagens",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "content": "Essa é uma postagem de exemplo 1",
+                                        "user_id": 1,
+                                        "likes": 0,
+                                        "createdAt": "2023-11-21T20:03:42.758Z",
+                                        "updatedAt": "2023-11-21T20:03:42.758Z"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhuma postagem encontrada"
+                    }
+                }
+            }
+        },
+        "/getPostById/:id": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "int"
+                    }
+                }
+            ],
+            "get": {
+                "summary": "Obter postagem por id",
+                "tags": ["Posts"],
+                "responses": {
+                    "200": {
+                        "description": "Postagem encontrada",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "content": "Essa é uma postagem de exemplo 1",
+                                        "user_id": 1,
+                                        "likes": 0,
+                                        "createdAt": "2023-11-21T20:03:42.758Z",
+                                        "updatedAt": "2023-11-21T20:03:42.758Z"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhuma postagem encontrada"
+                    }
+                }
+            }
+        },
+        "/getPostByUserId/:id": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "int"
+                    }
+                }
+            ],
+            "get": {
+                "summary": "Obter postagem por id do usuário",
+                "tags": ["Posts"],
+                "responses": {
+                    "200": {
+                        "description": "Postagem encontrada",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 3,
+                                        "content": "Essa é uma postagem de exemplo 3",
+                                        "user_id": 2,
+                                        "likes": 0,
+                                        "createdAt": "2023-11-21T20:04:06.483Z",
+                                        "updatedAt": "2023-11-21T20:04:06.483Z"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    }
+                }
+            }
+        },
+        "/createPost": {
+            "post": {
+                "summary": "Criar uma nova postagem",
+                "tags": ["Posts"],
+                "requestBody": {
+                    "description": "Nova postagem",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "id": null,
+                                "content": "Essa é uma postagem de exemplo 4",
+                                "user_id": 2
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Postagem criada com sucesso",
+                        "tags": ["Posts"],
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": null,
+                                    "content": "Essa é uma postagem de exemplo 4",
+                                    "user_id": 2
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitação inválida: Informações incorretas"
+                    }
+                }
+            }
+        },
+        "/deletePost/:id": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "int"
+                    }
+                }
+            ],
+            "delete": {
+                "tags": ["Posts"],
+                "summary": "Excluir uma postagem por ID",
+                "responses": {
+                    "204": {
+                        "description": "Postagem excluída com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Postagem não encontrada"
+                    }
+                }
+            }
+        },
+        "/getComments": {
+            "get": {
+                "summary": "Obter todos os comentários",
+                "tags": ["Comments"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de comentários",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "content": "Que legal, muito útil",
+                                        "user_id": 1,
+                                        "post_id": 3,
+                                        "createdAt": "2023-11-21T20:35:22.985Z",
+                                        "updatedAt": "2023-11-21T20:35:22.985Z"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhum comentário encontrado"
+                    }
+                }
+            }
+        },
+        "/getCommentsByPostId/:id": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "int"
+                    }
+                }
+            ],
+            "get": {
+                "summary": "Obter comentário por id da postagem",
+                "tags": ["Comments"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de comentários",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "content": "Que legal, muito útil",
+                                        "user_id": 1,
+                                        "post_id": 3,
+                                        "createdAt": "2023-11-21T20:35:22.985Z",
+                                        "updatedAt": "2023-11-21T20:35:22.985Z"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "content": "Não gostei.",
+                                        "user_id": 2,
+                                        "post_id": 3,
+                                        "createdAt": "2023-11-21T20:36:43.569Z",
+                                        "updatedAt": "2023-11-21T20:36:43.569Z"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Postagem não encontrada"
+                    }
+                }
+            }
+        },
+        "/createComment": {
+            "post": {
+                "summary": "Criar um novo comentário",
+                "tags": ["Comments"],
+                "requestBody": {
+                    "description": "Novo comentário",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "user_id": 2,
+                                "content": "Talvez seja melhor.",
+                                "post_id": 1
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Comentário criado com sucesso",
+                        "tags": ["Posts"],
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "user_id": 1,
+                                    "content": "Talvez seja melhor outra coisa.",
+                                    "post_id": 1
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitação inválida: Informações incorretas"
+                    }
+                }
+            }
+        },
+        "/deleteComment/:id": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "int"
+                    }
+                }
+            ],
+            "delete": {
+                "tags": ["Comments"],
+                "summary": "Excluir um comentário por ID",
+                "responses": {
+                    "204": {
+                        "description": "Comentário excluído com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comentário não encontrado"
                     }
                 }
             }

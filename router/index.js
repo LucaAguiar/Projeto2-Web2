@@ -11,7 +11,7 @@ const route = express.Router();
 
 // Users routes:
 route.get("/getUsers", userController.getUsers);
-route.get("/getUserByName", userController.getUserByName);
+route.get("/getUserByName/:name", userController.getUserByName);
 route.post("/createUser", userController.createUser);
 route.put("/updateUser/:id", userController.updateUser);
 route.delete("/deleteUser/:id", userController.deleteUser);
